@@ -1,6 +1,21 @@
 @CadastroPessoas.Api_HostAddress = http://localhost:5297
 
-GET {{CadastroPessoas.Api_HostAddress}}/weatherforecast/
-Accept: application/json
+### Cadastrar pessoa
+POST {{CadastroPessoas.Api_HostAddress}}/api/pessoas
+Content-Type: application/json
 
-###
+{
+  "nome": "Maria Silva",
+  "cpf": "12345678909",
+  "dataNascimento": "1990-05-15",
+  "ativo": true
+}
+
+### Listar todas
+GET {{CadastroPessoas.Api_HostAddress}}/api/pessoas
+
+### Buscar por id
+GET {{CadastroPessoas.Api_HostAddress}}/api/pessoas/1
+
+### Buscar inexistente (esperado: 404)
+GET {{CadastroPessoas.Api_HostAddress}}/api/pessoas/999
