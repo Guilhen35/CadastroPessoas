@@ -47,3 +47,36 @@ DELETE {{CadastroPessoas.Api_HostAddress}}/api/pessoas/1
 
 ### Remover inexistente (esperado: 404)
 DELETE {{CadastroPessoas.Api_HostAddress}}/api/pessoas/999
+
+### Cadastrar sem nome (esperado: 400)
+POST {{CadastroPessoas.Api_HostAddress}}/api/pessoas
+Content-Type: application/json
+
+{
+  "nome": "",
+  "cpf": "12345678909",
+  "dataNascimento": "1990-05-15",
+  "ativo": true
+}
+
+### Cadastrar com CPF curto (esperado: 400)
+POST {{CadastroPessoas.Api_HostAddress}}/api/pessoas
+Content-Type: application/json
+
+{
+  "nome": "Joao Pereira",
+  "cpf": "123",
+  "dataNascimento": "1985-03-20",
+  "ativo": true
+}
+
+### Cadastrar com data no futuro (esperado: 400)
+POST {{CadastroPessoas.Api_HostAddress}}/api/pessoas
+Content-Type: application/json
+
+{
+  "nome": "Ana Costa",
+  "cpf": "98765432100",
+  "dataNascimento": "2099-01-01",
+  "ativo": true
+}

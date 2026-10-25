@@ -7,7 +7,7 @@ namespace CadastroPessoas.Api.Controllers;
 [Route("api/[controller]")]
 public class PessoasController : ControllerBase
 {
-    // Dados de memória temporários
+    
     private static readonly List<Pessoa> _pessoas = new();
     private static int _proximoId = 1;
 
@@ -31,6 +31,9 @@ public class PessoasController : ControllerBase
     [HttpPost]
     public ActionResult<Pessoa> Criar(Pessoa pessoa)
     {
+        if (pessoa.DataNascimento > DateOnly.FromDateTime(DateTime.Today))
+            return BadRequest("A data de nascimento não pode ser no futuro.");
+
         pessoa.Id = _proximoId++;
         _pessoas.Add(pessoa);
 
@@ -40,6 +43,9 @@ public class PessoasController : ControllerBase
     [HttpPut("{id:int}")]
     public IActionResult Atualizar(int id, Pessoa pessoaAtualizada)
     {
+        if (pessoaAtualizada.DataNascimento > DateOnly.FromDateTime(DateTime.Today))
+            return BadRequest("A data de nascimento não pode ser no futuro.");
+
         var pessoa = _pessoas.FirstOrDefault(p => p.Id == id);
 
         if (pessoa is null)
@@ -65,5 +71,4 @@ public class PessoasController : ControllerBase
 
         return NoContent();
     }
-
 }
