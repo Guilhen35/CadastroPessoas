@@ -36,4 +36,34 @@ public class PessoasController : ControllerBase
 
         return CreatedAtAction(nameof(ObterPorId), new { id = pessoa.Id }, pessoa);
     }
+
+    [HttpPut("{id:int}")]
+    public IActionResult Atualizar(int id, Pessoa pessoaAtualizada)
+    {
+        var pessoa = _pessoas.FirstOrDefault(p => p.Id == id);
+
+        if (pessoa is null)
+            return NotFound();
+
+        pessoa.Nome = pessoaAtualizada.Nome;
+        pessoa.Cpf = pessoaAtualizada.Cpf;
+        pessoa.DataNascimento = pessoaAtualizada.DataNascimento;
+        pessoa.Ativo = pessoaAtualizada.Ativo;
+
+        return NoContent();
+    }
+
+    [HttpDelete("{id:int}")]
+    public IActionResult Remover(int id)
+    {
+        var pessoa = _pessoas.FirstOrDefault(p => p.Id == id);
+
+        if (pessoa is null)
+            return NotFound();
+
+        _pessoas.Remove(pessoa);
+
+        return NoContent();
+    }
+
 }

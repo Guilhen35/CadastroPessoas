@@ -19,3 +19,31 @@ GET {{CadastroPessoas.Api_HostAddress}}/api/pessoas/1
 
 ### Buscar inexistente (esperado: 404)
 GET {{CadastroPessoas.Api_HostAddress}}/api/pessoas/999
+
+### Atualizar pessoa (esperado: 204)
+PUT {{CadastroPessoas.Api_HostAddress}}/api/pessoas/1
+Content-Type: application/json
+
+{
+  "nome": "Maria Souza",
+  "cpf": "12345678909",
+  "dataNascimento": "1990-05-15",
+  "ativo": false
+}
+
+### Atualizar inexistente (esperado: 404)
+PUT {{CadastroPessoas.Api_HostAddress}}/api/pessoas/999
+Content-Type: application/json
+
+{
+  "nome": "Ninguem",
+  "cpf": "00000000000",
+  "dataNascimento": "2000-01-01",
+  "ativo": true
+}
+
+### Remover pessoa (esperado: 204)
+DELETE {{CadastroPessoas.Api_HostAddress}}/api/pessoas/1
+
+### Remover inexistente (esperado: 404)
+DELETE {{CadastroPessoas.Api_HostAddress}}/api/pessoas/999
