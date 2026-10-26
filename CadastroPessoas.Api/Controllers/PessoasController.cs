@@ -10,6 +10,7 @@ public class PessoasController : ControllerBase
     
     private static readonly List<Pessoa> _pessoas = new();
     private static int _proximoId = 1;
+    private static int _proximoTelefoneId = 1;
 
     [HttpGet]
     public ActionResult<IEnumerable<Pessoa>> ObterTodas()
@@ -35,6 +36,10 @@ public class PessoasController : ControllerBase
             return BadRequest("A data de nascimento não pode ser no futuro.");
 
         pessoa.Id = _proximoId++;
+
+        foreach (var telefone in pessoa.Telefones)
+            telefone.Id = _proximoTelefoneId++;
+
         _pessoas.Add(pessoa);
 
         return CreatedAtAction(nameof(ObterPorId), new { id = pessoa.Id }, pessoa);

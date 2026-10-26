@@ -80,3 +80,18 @@ Content-Type: application/json
   "dataNascimento": "2099-01-01",
   "ativo": true
 }
+
+### Cadastrar pessoa com telefones (esperado: 201)
+POST {{CadastroPessoas.Api_HostAddress}}/api/pessoas
+Content-Type: application/json
+
+{
+  "nome": "Carlos Lima",
+  "cpf": "11122233344",
+  "dataNascimento": "1980-07-10",
+  "ativo": true,
+  "telefones": [
+    { "tipo": "Celular", "numero": "43999998888" },
+    { "tipo": "Comercial", "numero": "4332551234" }
+  ]
+}

@@ -16,4 +16,5 @@ public class Pessoa
     
     public DateOnly DataNascimento { get; set; }
     public bool Ativo { get; set; } = true;
+    public List<Telefone> Telefones { get; set; } = new();
 }
