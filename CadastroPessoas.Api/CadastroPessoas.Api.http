@@ -95,3 +95,30 @@ Content-Type: application/json
     { "tipo": "Comercial", "numero": "4332551234" }
   ]
 }
+
+### Listar telefones da pessoa (esperado: 200)
+GET {{CadastroPessoas.Api_HostAddress}}/api/pessoas/1/telefones
+
+### Buscar telefone por id (esperado: 200)
+GET {{CadastroPessoas.Api_HostAddress}}/api/pessoas/1/telefones/1
+
+### Adicionar telefone (esperado: 201)
+POST {{CadastroPessoas.Api_HostAddress}}/api/pessoas/1/telefones
+Content-Type: application/json
+
+{
+  "tipo": "Residencial",
+  "numero": "4332559999"
+}
+
+ ### Atualizar telefone (esperado: 204)
+PUT {{CadastroPessoas.Api_HostAddress}}/api/pessoas/1/telefones/1
+Content-Type: application/json
+
+{
+  "tipo": "Celular",
+  "numero": "43988887777"
+}
+
+### Remover telefone (esperado: 204)
+DELETE {{CadastroPessoas.Api_HostAddress}}/api/pessoas/1/telefones/2

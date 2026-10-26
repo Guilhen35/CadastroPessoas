@@ -76,4 +76,82 @@ public class PessoasController : ControllerBase
 
         return NoContent();
     }
+
+    [HttpGet("{pessoaId:int}/telefones")]
+    public ActionResult<IEnumerable<Telefone>> ObterTelefones(int pessoaId)
+    {
+        var pessoa = _pessoas.FirstOrDefault(p => p.Id == pessoaId);
+
+        if (pessoa is null)
+            return NotFound();
+
+        return Ok(pessoa.Telefones);
+    }
+
+    [HttpGet("{pessoaId:int}/telefones/{telefoneId:int}")]
+    public ActionResult<Telefone> ObterTelefonePorId(int pessoaId, int telefoneId)
+    {
+        var pessoa = _pessoas.FirstOrDefault(p => p.Id == pessoaId);
+
+        if (pessoa is null)
+            return NotFound();
+
+        var telefone = pessoa.Telefones.FirstOrDefault(t => t.Id == telefoneId);
+
+        if (telefone is null)
+            return NotFound();
+
+        return Ok(telefone);
+    }
+
+    [HttpPost("{pessoaId:int}/telefones")]
+    public ActionResult<Telefone> AdicionarTelefone(int pessoaId, Telefone telefone)
+    {
+        var pessoa = _pessoas.FirstOrDefault(p => p.Id == pessoaId);
+
+        if (pessoa is null)
+            return NotFound();
+
+        telefone.Id = _proximoTelefoneId++;
+        pessoa.Telefones.Add(telefone);
+
+        return CreatedAtAction(nameof(ObterTelefonePorId), new { pessoaId = pessoa.Id, telefoneId = telefone.Id }, telefone);
+    }
+
+    [HttpPut("{pessoaId:int}/telefones/{telefoneId:int}")]
+    public IActionResult AtualizarTelefone(int pessoaId, int telefoneId, Telefone telefoneAtualizado)
+    {
+        var pessoa = _pessoas.FirstOrDefault(p => p.Id == pessoaId);
+
+        if (pessoa is null)
+            return NotFound();
+
+        var telefone = pessoa.Telefones.FirstOrDefault(t => t.Id == telefoneId);
+
+        if (telefone is null)
+            return NotFound();
+
+        telefone.Tipo = telefoneAtualizado.Tipo;
+        telefone.Numero = telefoneAtualizado.Numero;
+
+        return NoContent();
+    }
+
+    [HttpDelete("{pessoaId:int}/telefones/{telefoneId:int}")]
+    public IActionResult RemoverTelefone(int pessoaId, int telefoneId)
+    {
+        var pessoa = _pessoas.FirstOrDefault(p => p.Id == pessoaId);
+
+        if (pessoa is null)
+            return NotFound();
+
+        var telefone = pessoa.Telefones.FirstOrDefault(t => t.Id == telefoneId);
+
+        if (telefone is null)
+            return NotFound();
+
+        pessoa.Telefones.Remove(telefone);
+
+        return NoContent();
+    }
 }
